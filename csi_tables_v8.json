@@ -1,0 +1,2348 @@
+{
+ "说明": "WoT 2.4.0 服务器 entity_defs 全量 csi 表 (v8)。 csi = clientServerFullIndex, 经 allocateClientServerFullIndexes 稳定排序: 定长属性按 streamSize 升序在前, 变长按 VLH 字节数在后。 回放 0x07/0x24 块的 topLevelIndex 即此表 csi (selectEntity 目标实体)。 已与实测 11 锚点全部吻合: Vehicle 4=siegeState/13=gunAnglesPacked/14=health/15=engineMode/16=avatarID/23=stunInfo/33=perkEffects/34=perks; Avatar 10=ownVehicleGear/19=ownVehicleAuxPhysicsData。",
+ "规则": {
+  "累积序": "Parent链 → Implements按声明序(各自递归,不跟随接口Parent) → 自有Properties",
+  "CS判定": "flags & (OTHER_CLIENT 0x02 | OWN_CLIENT 0x04 | REPLAY 0x100)",
+  "csi排序": "稳定排序 key=(0,streamSize) 定长 / (1,vlhBytes) 变长; streamSize=类型宽度,变长=-VLH",
+  "勘误v5": "csi23=stunInfo(非damageStickers, 8B定长STUN_INFO); csi1=isStrafing(原\"移动标志\",语义待细化: 值=1与10Hz移动更新相关)"
+ },
+ "entities": {
+  "Account": {
+   "cs_property_count": 4,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "incarnationID",
+     "streamSize": 8,
+     "flags": 12,
+     "source": "Account"
+    },
+    {
+     "csi": 1,
+     "name": "requiredVersion_2400",
+     "streamSize": -1,
+     "flags": 12,
+     "source": "AccountVersion"
+    },
+    {
+     "csi": 2,
+     "name": "name",
+     "streamSize": -1,
+     "flags": 12,
+     "source": "Account"
+    },
+    {
+     "csi": 3,
+     "name": "initialServerSettings",
+     "streamSize": -1,
+     "flags": 12,
+     "source": "Account"
+    }
+   ]
+  },
+  "Avatar": {
+   "cs_property_count": 28,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isObserverFPV",
+     "streamSize": 1,
+     "flags": 260,
+     "source": "AvatarObserver"
+    },
+    {
+     "csi": 1,
+     "name": "numOfObservers",
+     "streamSize": 1,
+     "flags": 260,
+     "source": "AvatarObserver"
+    },
+    {
+     "csi": 2,
+     "name": "arenaBonusType",
+     "streamSize": 1,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 3,
+     "name": "arenaGuiType",
+     "streamSize": 1,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 4,
+     "name": "weatherPresetID",
+     "streamSize": 1,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 5,
+     "name": "tkillIsSuspected",
+     "streamSize": 1,
+     "flags": 12,
+     "source": "Avatar"
+    },
+    {
+     "csi": 6,
+     "name": "team",
+     "streamSize": 1,
+     "flags": 260,
+     "source": "Avatar"
+    },
+    {
+     "csi": 7,
+     "name": "isObserverBothTeams",
+     "streamSize": 1,
+     "flags": 260,
+     "source": "Avatar"
+    },
+    {
+     "csi": 8,
+     "name": "observableTeamID",
+     "streamSize": 1,
+     "flags": 4,
+     "source": "Avatar"
+    },
+    {
+     "csi": 9,
+     "name": "isGunLocked",
+     "streamSize": 1,
+     "flags": 260,
+     "source": "Avatar"
+    },
+    {
+     "csi": 10,
+     "name": "ownVehicleGear",
+     "streamSize": 1,
+     "flags": 260,
+     "source": "Avatar"
+    },
+    {
+     "csi": 11,
+     "name": "customizationDisplayType",
+     "streamSize": 1,
+     "flags": 4,
+     "source": "Avatar"
+    },
+    {
+     "csi": 12,
+     "name": "shouldSendKillcamSimulationData",
+     "streamSize": 1,
+     "flags": 4,
+     "source": "Avatar"
+    },
+    {
+     "csi": 13,
+     "name": "denunciationsLeft",
+     "streamSize": 2,
+     "flags": 12,
+     "source": "Avatar"
+    },
+    {
+     "csi": 14,
+     "name": "ownVehicleHullAimingPitchPacked",
+     "streamSize": 2,
+     "flags": 260,
+     "source": "Avatar"
+    },
+    {
+     "csi": 15,
+     "name": "battleChatRestriction",
+     "streamSize": 2,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 16,
+     "name": "arenaTypeID",
+     "streamSize": 4,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 17,
+     "name": "playerVehicleID",
+     "streamSize": 4,
+     "flags": 260,
+     "source": "Avatar"
+    },
+    {
+     "csi": 18,
+     "name": "arenaUniqueID",
+     "streamSize": 8,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 19,
+     "name": "ownVehicleAuxPhysicsData",
+     "streamSize": 8,
+     "flags": 260,
+     "source": "Avatar"
+    },
+    {
+     "csi": 20,
+     "name": "playLimits",
+     "streamSize": 16,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 21,
+     "name": "remoteCamera",
+     "streamSize": 22,
+     "flags": 260,
+     "source": "AvatarObserver"
+    },
+    {
+     "csi": 22,
+     "name": "name",
+     "streamSize": -1,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 23,
+     "name": "sessionID",
+     "streamSize": -1,
+     "flags": 12,
+     "source": "Avatar"
+    },
+    {
+     "csi": 24,
+     "name": "arenaExtraData",
+     "streamSize": -1,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 25,
+     "name": "clientCtx",
+     "streamSize": -1,
+     "flags": 268,
+     "source": "Avatar"
+    },
+    {
+     "csi": 26,
+     "name": "ammoViews",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Avatar"
+    },
+    {
+     "csi": 27,
+     "name": "goodiesSnapshot",
+     "streamSize": -1,
+     "flags": 268,
+     "source": "Avatar"
+    }
+   ]
+  },
+  "ArenaInfo": {
+   "cs_property_count": 1,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "planeTrajectory",
+     "streamSize": 60,
+     "flags": 263,
+     "source": "PlaneTrajectoryArenaInfo"
+    }
+   ]
+  },
+  "ClientSelectableObject": {
+   "cs_property_count": 7,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 4,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    }
+   ]
+  },
+  "HangarVehicle": {
+   "cs_property_count": 0,
+   "properties": []
+  },
+  "Vehicle": {
+   "cs_property_count": 50,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "burnoutLevel",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Wheels"
+    },
+    {
+     "csi": 1,
+     "name": "isStrafing",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 2,
+     "name": "isHidden",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 3,
+     "name": "physicsMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 4,
+     "name": "siegeState",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 5,
+     "name": "isCrewActive",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 6,
+     "name": "customRoleSlotTypeId",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 7,
+     "name": "arenaBonusType",
+     "streamSize": 1,
+     "flags": 260,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 8,
+     "name": "isSpeedCapturing",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 9,
+     "name": "isBlockingCapture",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 10,
+     "name": "isMyVehicle",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 11,
+     "name": "enableExternalRespawn",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 12,
+     "name": "botDisplayStatus",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 13,
+     "name": "gunAnglesPacked",
+     "streamSize": 2,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 14,
+     "name": "health",
+     "streamSize": 2,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 15,
+     "name": "engineMode",
+     "streamSize": 2,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 16,
+     "name": "avatarID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 17,
+     "name": "masterVehID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 18,
+     "name": "arenaTypeID",
+     "streamSize": 4,
+     "flags": 260,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 19,
+     "name": "debuff",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 20,
+     "name": "quickShellChangerFactor",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 21,
+     "name": "onRespawnReloadTimeFactor",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 22,
+     "name": "wheelsState",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "Wheels"
+    },
+    {
+     "csi": 23,
+     "name": "stunInfo",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 24,
+     "name": "arenaUniqueID",
+     "streamSize": 8,
+     "flags": 260,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 25,
+     "name": "dotEffect",
+     "streamSize": 14,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 26,
+     "name": "remoteCamera",
+     "streamSize": 22,
+     "flags": 260,
+     "source": "VehicleObserver"
+    },
+    {
+     "csi": 27,
+     "name": "inspiringEffect",
+     "streamSize": 24,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 28,
+     "name": "healingEffect",
+     "streamSize": 24,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 29,
+     "name": "ownVehiclePosition",
+     "streamSize": 32,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 30,
+     "name": "inspired",
+     "streamSize": 36,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 31,
+     "name": "steeringAngles",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Wheels"
+    },
+    {
+     "csi": 32,
+     "name": "wheelsScroll",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Wheels"
+    },
+    {
+     "csi": 33,
+     "name": "perkEffects",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Perks_Vehicle"
+    },
+    {
+     "csi": 34,
+     "name": "perks",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Perks_Vehicle"
+    },
+    {
+     "csi": 35,
+     "name": "perksRibbonNotify",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Perks_Vehicle"
+    },
+    {
+     "csi": 36,
+     "name": "postmortemViewPointName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 37,
+     "name": "publicInfo",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 38,
+     "name": "damageStickers",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 39,
+     "name": "publicStateModifiers",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 40,
+     "name": "crewCompactDescrs",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 41,
+     "name": "enhancements",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 42,
+     "name": "setups",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 43,
+     "name": "setupsIndexes",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 44,
+     "name": "vehPerks",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 45,
+     "name": "vehPostProgression",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 46,
+     "name": "disabledSwitches",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 47,
+     "name": "healing",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 48,
+     "name": "healOverTime",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    },
+    {
+     "csi": 49,
+     "name": "dogTag",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Vehicle"
+    }
+   ]
+  },
+  "AreaDestructibles": {
+   "cs_property_count": 4,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "destroyedModules",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "AreaDestructibles"
+    },
+    {
+     "csi": 1,
+     "name": "destroyedFragiles",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "AreaDestructibles"
+    },
+    {
+     "csi": 2,
+     "name": "fallenColumns",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "AreaDestructibles"
+    },
+    {
+     "csi": 3,
+     "name": "fallenTrees",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "AreaDestructibles"
+    }
+   ]
+  },
+  "OfflineEntity": {
+   "cs_property_count": 0,
+   "properties": []
+  },
+  "Flock": {
+   "cs_property_count": 15,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "modelCount",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 1,
+     "name": "flyAroundCenter",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 2,
+     "name": "yawSpeed",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 3,
+     "name": "pitchSpeed",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 4,
+     "name": "rollSpeed",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 5,
+     "name": "animSpeedMin",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 6,
+     "name": "animSpeedMax",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 7,
+     "name": "height",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 8,
+     "name": "radius",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 9,
+     "name": "deadZoneRadius",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 10,
+     "name": "speedAtBottom",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 11,
+     "name": "speedAtTop",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 12,
+     "name": "decisionTime",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 13,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Flock"
+    },
+    {
+     "csi": 14,
+     "name": "modelName2",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "Flock"
+    }
+   ]
+  },
+  "FlockExotic": {
+   "cs_property_count": 21,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "modelCount",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 1,
+     "name": "animSpeedMax",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 2,
+     "name": "animSpeedMin",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 3,
+     "name": "speed",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 4,
+     "name": "accelerationTime",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 5,
+     "name": "triggerRadius",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 6,
+     "name": "spawnRadius",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 7,
+     "name": "spawnHeight",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 8,
+     "name": "flightRadius",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 9,
+     "name": "flightHeight",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 10,
+     "name": "flightAngleMin",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 11,
+     "name": "flightAngleMax",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 12,
+     "name": "flightOffsetFromOrigin",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 13,
+     "name": "lifeTime",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 14,
+     "name": "respawnTime",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 15,
+     "name": "initSpeedRandom",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 16,
+     "name": "speedRandom",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 17,
+     "name": "explosionRadius",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 18,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 19,
+     "name": "modelName2",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "FlockExotic"
+    },
+    {
+     "csi": 20,
+     "name": "flightSound",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "FlockExotic"
+    }
+   ]
+  },
+  "Login": {
+   "cs_property_count": 1,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "accountDBID_s",
+     "streamSize": -1,
+     "flags": 12,
+     "source": "Login"
+    }
+   ]
+  },
+  "DetachedTurret": {
+   "cs_property_count": 5,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isUnderWater",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "DetachedTurret"
+    },
+    {
+     "csi": 1,
+     "name": "isCollidingWithWorld",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "DetachedTurret"
+    },
+    {
+     "csi": 2,
+     "name": "vehicleID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "DetachedTurret"
+    },
+    {
+     "csi": 3,
+     "name": "vehicleCompDescr",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "DetachedTurret"
+    },
+    {
+     "csi": 4,
+     "name": "outfitCD",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "DetachedTurret"
+    }
+   ]
+  },
+  "DebugDrawEntity": {
+   "cs_property_count": 1,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "drawObjects",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "DebugDrawEntity"
+    }
+   ]
+  },
+  "ClientSelectableCameraObject": {
+   "cs_property_count": 7,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 4,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    }
+   ]
+  },
+  "ClientSelectableCameraVehicle": {
+   "cs_property_count": 7,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableCameraVehicle"
+    },
+    {
+     "csi": 4,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    }
+   ]
+  },
+  "ClientSelectableWebLinksOpener": {
+   "cs_property_count": 8,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 4,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 7,
+     "name": "url",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableWebLinksOpener"
+    }
+   ]
+  },
+  "ClientSelectableEasterEgg": {
+   "cs_property_count": 11,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "multiLanguageSupport",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableEasterEgg"
+    },
+    {
+     "csi": 4,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 7,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 8,
+     "name": "imageName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableEasterEgg"
+    },
+    {
+     "csi": 9,
+     "name": "outlineModelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableEasterEgg"
+    },
+    {
+     "csi": 10,
+     "name": "animationSequence",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableEasterEgg"
+    }
+   ]
+  },
+  "EmptyEntity": {
+   "cs_property_count": 0,
+   "properties": []
+  },
+  "LimitedVisibilityEntity": {
+   "cs_property_count": 0,
+   "properties": []
+  },
+  "HeroTank": {
+   "cs_property_count": 10,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "markerHeightFactor",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "HeroTank"
+    },
+    {
+     "csi": 4,
+     "name": "vehicleTurretYaw",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "HeroTank"
+    },
+    {
+     "csi": 5,
+     "name": "vehicleGunPitch",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "HeroTank"
+    },
+    {
+     "csi": 6,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableCameraVehicle"
+    },
+    {
+     "csi": 7,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 8,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 9,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    }
+   ]
+  },
+  "PlatoonTank": {
+   "cs_property_count": 11,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "markerHeightFactor",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "PlatoonTank"
+    },
+    {
+     "csi": 4,
+     "name": "vehicleTurretYaw",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "PlatoonTank"
+    },
+    {
+     "csi": 5,
+     "name": "vehicleGunPitch",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "PlatoonTank"
+    },
+    {
+     "csi": 6,
+     "name": "slotIndex",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "PlatoonTank"
+    },
+    {
+     "csi": 7,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableCameraVehicle"
+    },
+    {
+     "csi": 8,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 9,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 10,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    }
+   ]
+  },
+  "PlatoonLighting": {
+   "cs_property_count": 8,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 4,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 7,
+     "name": "animationStateMachine",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "PlatoonLighting"
+    }
+   ]
+  },
+  "SectorBase": {
+   "cs_property_count": 12,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isActive",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 1,
+     "name": "team",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 2,
+     "name": "baseID",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 3,
+     "name": "sectorID",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 4,
+     "name": "pointsPercentage",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 5,
+     "name": "capturingStopped",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 6,
+     "name": "isCaptured",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 7,
+     "name": "invadersCount",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 8,
+     "name": "maxPoints",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 9,
+     "name": "onDamageCooldownTime",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 10,
+     "name": "radius",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "SectorBase"
+    },
+    {
+     "csi": 11,
+     "name": "expectedCaptureTime",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "SectorBase"
+    }
+   ]
+  },
+  "Sector": {
+   "cs_property_count": 10,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "groupID",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 1,
+     "name": "sectorID",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 2,
+     "name": "playerGroup",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 3,
+     "name": "IDInPlayerGroup",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 4,
+     "name": "team",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 5,
+     "name": "state",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 6,
+     "name": "lengthX",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 7,
+     "name": "lengthZ",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 8,
+     "name": "transitionTime",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Sector"
+    },
+    {
+     "csi": 9,
+     "name": "endOfTransitionPeriod",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "Sector"
+    }
+   ]
+  },
+  "DestructibleEntity": {
+   "cs_property_count": 9,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isActive",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 1,
+     "name": "team",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 2,
+     "name": "destructibleEntityID",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 3,
+     "name": "isDestructibleDestroyed",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 4,
+     "name": "typeID",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 5,
+     "name": "health",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 6,
+     "name": "maxHealth",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 7,
+     "name": "linkedMapActivities",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    },
+    {
+     "csi": 8,
+     "name": "damageStickers",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "DestructibleEntity"
+    }
+   ]
+  },
+  "StepRepairPoint": {
+   "cs_property_count": 2,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "team",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "StepRepairPoint"
+    },
+    {
+     "csi": 1,
+     "name": "radius",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "StepRepairPoint"
+    }
+   ]
+  },
+  "ProtectionZone": {
+   "cs_property_count": 5,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "zoneID",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ProtectionZone"
+    },
+    {
+     "csi": 1,
+     "name": "team",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ProtectionZone"
+    },
+    {
+     "csi": 2,
+     "name": "isActive",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ProtectionZone"
+    },
+    {
+     "csi": 3,
+     "name": "lengthX",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "ProtectionZone"
+    },
+    {
+     "csi": 4,
+     "name": "lengthZ",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "ProtectionZone"
+    }
+   ]
+  },
+  "TeamInfo": {
+   "cs_property_count": 1,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "teamID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "TeamInfo"
+    }
+   ]
+  },
+  "AvatarInfo": {
+   "cs_property_count": 1,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "avatarID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AvatarInfo"
+    }
+   ]
+  },
+  "ArenaObserverInfo": {
+   "cs_property_count": 0,
+   "properties": []
+  },
+  "AreaOfEffect": {
+   "cs_property_count": 4,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "vehicleID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 1,
+     "name": "equipmentID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 2,
+     "name": "launchTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 3,
+     "name": "strikeTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    }
+   ]
+  },
+  "AttackBomber": {
+   "cs_property_count": 4,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "vehicleID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 1,
+     "name": "equipmentID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 2,
+     "name": "launchTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 3,
+     "name": "strikeTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    }
+   ]
+  },
+  "AttackArtilleryFort": {
+   "cs_property_count": 5,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "vehicleID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 1,
+     "name": "equipmentID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 2,
+     "name": "team",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AttackArtilleryFort"
+    },
+    {
+     "csi": 3,
+     "name": "launchTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 4,
+     "name": "strikeTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    }
+   ]
+  },
+  "PersonalDeathZone": {
+   "cs_property_count": 4,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "vehicleID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 1,
+     "name": "equipmentID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 2,
+     "name": "launchTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    },
+    {
+     "csi": 3,
+     "name": "strikeTime",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "AreaOfEffect"
+    }
+   ]
+  },
+  "ClientSelectableRankedObject": {
+   "cs_property_count": 7,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 4,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    }
+   ]
+  },
+  "SimulatedVehicle": {
+   "cs_property_count": 19,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isPlayerVehicle",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 1,
+     "name": "simulationData_siegeState",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 2,
+     "name": "simulationData_health",
+     "streamSize": 2,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 3,
+     "name": "simulationData_engineMode",
+     "streamSize": 2,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 4,
+     "name": "simulationData_wheelsState",
+     "streamSize": 2,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 5,
+     "name": "simulationData_tracksInAir",
+     "streamSize": 2,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 6,
+     "name": "realVehicleID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 7,
+     "name": "simulationData_dynAttachmentsInfo",
+     "streamSize": 6,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 8,
+     "name": "simulationData_gunAngles",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 9,
+     "name": "simulationData_turretAndGunSpeed",
+     "streamSize": 8,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 10,
+     "name": "simulationData_position",
+     "streamSize": 12,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 11,
+     "name": "simulationData_rotation",
+     "streamSize": 12,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 12,
+     "name": "simulationData_velocity",
+     "streamSize": 12,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 13,
+     "name": "simulationData_angVelocity",
+     "streamSize": 12,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 14,
+     "name": "publicInfo",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 15,
+     "name": "simulationData_simulationType",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 16,
+     "name": "simulationData_damageStickers",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 17,
+     "name": "simulationData_brokenTracks",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    },
+    {
+     "csi": 18,
+     "name": "simulationData_wheelsSteering",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "SimulatedVehicle"
+    }
+   ]
+  },
+  "ClientSelectableHangarsSwitcher": {
+   "cs_property_count": 8,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isOver3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 1,
+     "name": "isClick3DSound",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 2,
+     "name": "edgeMode",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 3,
+     "name": "modelName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 4,
+     "name": "selectionId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 5,
+     "name": "mouseOverSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 6,
+     "name": "clickSoundName",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableObject"
+    },
+    {
+     "csi": 7,
+     "name": "destHangar",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "ClientSelectableHangarsSwitcher"
+    }
+   ]
+  },
+  "StaticDeathZone": {
+   "cs_property_count": 5,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isActive",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "StaticDeathZone"
+    },
+    {
+     "csi": 1,
+     "name": "maskingPolygonsCount",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "StaticDeathZone"
+    },
+    {
+     "csi": 2,
+     "name": "zoneId",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "StaticDeathZone"
+    },
+    {
+     "csi": 3,
+     "name": "vehiclesUnderFire",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "StaticDeathZone"
+    },
+    {
+     "csi": 4,
+     "name": "proximityMarkerStyle",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "StaticDeathZone"
+    }
+   ]
+  },
+  "BasicMine": {
+   "cs_property_count": 7,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "isDetonated",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "BasicMine"
+    },
+    {
+     "csi": 1,
+     "name": "isActivated",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "BasicMine"
+    },
+    {
+     "csi": 2,
+     "name": "mineNumber",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "BasicMine"
+    },
+    {
+     "csi": 3,
+     "name": "isMarkerEnabled",
+     "streamSize": 1,
+     "flags": 263,
+     "source": "BasicMine"
+    },
+    {
+     "csi": 4,
+     "name": "equipmentID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "BasicMine"
+    },
+    {
+     "csi": 5,
+     "name": "ownerVehicleID",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "BasicMine"
+    },
+    {
+     "csi": 6,
+     "name": "activationTimeDelay",
+     "streamSize": 4,
+     "flags": 263,
+     "source": "BasicMine"
+    }
+   ]
+  },
+  "NetworkEntity": {
+   "cs_property_count": 4,
+   "properties": [
+    {
+     "csi": 0,
+     "name": "scale",
+     "streamSize": 12,
+     "flags": 263,
+     "source": "NetworkEntity"
+    },
+    {
+     "csi": 1,
+     "name": "unique_id",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "NetworkEntity"
+    },
+    {
+     "csi": 2,
+     "name": "prefab_path",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "NetworkEntity"
+    },
+    {
+     "csi": 3,
+     "name": "name",
+     "streamSize": -1,
+     "flags": 263,
+     "source": "NetworkEntity"
+    }
+   ]
+  }
+ }
+}
